@@ -1,0 +1,416 @@
+﻿SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Work_AR_SalesByMonth](
+	[AggregateType] [nvarchar](12) NULL,
+	[AggregateISO] [bit] NOT NULL,
+	[AggregateSum] [nvarchar](12) NOT NULL,
+	[CompanyCode] [nvarchar](3) NULL,
+	[WarehouseCode] [nvarchar](3) NULL,
+	[FamilyCode] [nvarchar](3) NULL,
+	[CustomerNo] [nvarchar](12) NULL,
+	[ItemId] [int] NULL,
+	[Year] [int] NOT NULL,
+	[01] [float] NULL,
+	[02] [float] NULL,
+	[03] [float] NULL,
+	[04] [float] NULL,
+	[05] [float] NULL,
+	[06] [float] NULL,
+	[07] [float] NULL,
+	[08] [float] NULL,
+	[09] [float] NULL,
+	[10] [float] NULL,
+	[11] [float] NULL,
+	[12] [float] NULL,
+	[13] [float] NULL,
+	[Total] [float] NULL,
+	[WeeksActive] [bigint] NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Work_Customers]    Script Date: 8/13/2021 6:47:15 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Work_Customers](
+	[CustomerId] [int] IDENTITY(1,1) NOT NULL,
+	[CustomerName] [varchar](30) NOT NULL,
+	[CustomerAddress1] [varchar](30) NULL,
+	[CustomerAddress2] [varchar](30) NULL,
+	[CustomerAddress3] [varchar](30) NULL,
+	[CustomerCity] [varchar](20) NULL,
+	[CustomerState] [varchar](2) NULL,
+	[CustomerZip] [varchar](10) NULL,
+	[CustomerCountry] [varchar](3) NULL,
+	[CustomerNo] [varchar](20) NOT NULL,
+	[TelephoneNo] [varchar](17) NULL,
+	[TelephoneExt] [varchar](5) NULL,
+	[FaxNo] [varchar](17) NULL,
+	[EmailAddress] [varchar](250) NULL,
+	[CreatedBy] [varchar](50) NULL,
+	[CreatedOn] [datetime] NULL,
+	[UpdatedBy] [varchar](50) NULL,
+	[UpdatedOn] [datetime] NULL,
+	[TermsCode] [varchar](2) NULL,
+	[SalespersonNo] [varchar](4) NULL,
+	[SalespersonNo2] [varchar](4) NULL,
+	[SalespersonNo3] [varchar](4) NULL,
+	[SalespersonNo4] [varchar](4) NULL,
+	[SalespersonNo5] [varchar](4) NULL,
+	[DateLastActivity] [date] NULL,
+	[DateLastPayment] [date] NULL,
+	[CustomerNoLUM] [varchar](24) NULL,
+	[CustomerNoLDI] [varchar](24) NULL,
+	[CustomerNoLCA] [varchar](24) NULL,
+	[UsesProductUpload] [bit] NULL,
+	[EblastAllocationPercent] [float] NULL,
+	[UploadFormatId] [int] NULL,
+	[UploadRouteId] [int] NULL,
+	[CustomerUploadName] [nvarchar](64) NULL,
+	[CompanyId] [int] NOT NULL,
+	[ItemCustomer] [bit] NULL,
+	[ViewCustomer] [bit] NULL,
+	[CompanyCode] [nvarchar](3) NOT NULL,
+	[UploadInformation] [nvarchar](4000) NULL,
+	[CustomerURL] [nvarchar](256) NULL,
+	[WebCustomer] [bit] NULL,
+	[LeadCustomer] [bit] NULL,
+ CONSTRAINT [PK_Work_Customers] PRIMARY KEY CLUSTERED 
+(
+	[CustomerId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Work_IM_Aggregates]    Script Date: 8/13/2021 6:47:15 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Work_IM_Aggregates](
+	[AggregateType] [nvarchar](12) NOT NULL,
+	[AggregateISO] [bit] NOT NULL,
+	[TransactionCode] [nvarchar](3) NULL,
+	[CompanyCode] [nvarchar](3) NULL,
+	[WarehouseCode] [nvarchar](3) NULL,
+	[FamilyCode] [nvarchar](12) NULL,
+	[ItemId] [int] NULL,
+	[Year] [int] NULL,
+	[Month] [int] NOT NULL,
+	[Week] [int] NULL,
+	[Repeat] [int] NULL,
+	[Quantity] [int] NOT NULL,
+	[AvgCost] [decimal](18, 4) NOT NULL,
+	[AvgPrice] [decimal](18, 2) NOT NULL,
+	[TotalCost] [decimal](18, 2) NOT NULL,
+	[TotalPrice] [decimal](18, 2) NOT NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Work_Item]    Script Date: 8/13/2021 6:47:15 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Work_Item](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[LumisourceItemId] [nvarchar](50) NOT NULL,
+	[LumisourceUniqueId] [nvarchar](128) NULL,
+	[LumisourceCollection] [nvarchar](1000) NULL,
+	[LumisourceDescriptionLong] [nvarchar](4000) NULL,
+	[VendorId] [int] NULL,
+	[VendorItemId] [nvarchar](50) NULL,
+	[VendorDescription] [nvarchar](2000) NULL,
+	[UpcId] [nvarchar](50) NULL,
+	[Status] [nvarchar](32) NULL,
+	[ProductTypeId] [int] NULL,
+	[ProductLineId] [int] NULL,
+	[ProductFamilyId] [int] NULL,
+	[ProductStyleId] [int] NULL,
+	[ProductStyle2Id] [int] NULL,
+	[ProductStyle3Id] [int] NULL,
+	[ProductCategoryId] [nvarchar](12) NULL,
+	[ProductCategorySubId] [nvarchar](24) NULL,
+	[Color] [nvarchar](400) NULL,
+	[UnitPrice] [float] NULL,
+	[UnitWeight] [float] NULL,
+	[StdCost] [float] NULL,
+	[DutyPct] [float] NULL,
+	[DutyRate] [float] NULL,
+	[AvgCost] [float] NULL,
+	[FirstCostLocal] [float] NULL,
+	[Overhead] [float] NULL,
+	[FirstCost] [float] NULL,
+	[CntRepackCost] [float] NULL,
+	[HTS] [varchar](50) NULL,
+	[CostNotes] [nvarchar](1000) NULL,
+	[Notes] [nvarchar](1000) NULL,
+	[CreatedBy] [varchar](50) NULL,
+	[CreatedOn] [datetime] NULL,
+	[UpdatedBy] [varchar](50) NULL,
+	[UpdatedOn] [datetime] NULL,
+	[SRP] [float] NULL,
+	[CustomerItemId] [nvarchar](50) NULL,
+	[OverheadPct] [float] NULL,
+	[ProductSpecs] [nvarchar](1000) NULL,
+	[AdFeature] [nvarchar](1000) NULL,
+	[DS] [float] NULL,
+	[Trade] [float] NULL,
+	[WorkingItemId] [nvarchar](50) NULL,
+	[CustomerId] [int] NULL,
+	[CustomerItemId2] [nvarchar](50) NULL,
+	[CustomerDescription] [nvarchar](1000) NULL,
+	[WorkingItemName] [nvarchar](1000) NULL,
+	[Sort] [int] NULL,
+	[Replenish] [bit] NOT NULL,
+	[CompanyId] [int] NULL,
+	[WarehouseId] [int] NULL,
+	[ExplodeKit] [bit] NULL,
+	[ProductCategorySubId2] [nvarchar](12) NULL,
+	[RestockPct] [float] NULL,
+	[MinimumOrder] [int] NULL,
+	[MfrLeadTime] [float] NULL,
+	[RetailPrice] [float] NULL,
+	[StandardPrice] [float] NULL,
+	[ItemType] [nvarchar](12) NULL,
+	[IncoTermFobId] [int] NULL,
+	[OriginPortId] [int] NULL,
+	[PackTypeId] [int] NULL,
+	[PackCount] [int] NULL,
+	[FirstCostCurrencyId] [int] NULL,
+	[FirstCostExchangeRate] [float] NULL,
+	[NmfcId] [int] NULL,
+	[DateCreated] [datetime] NULL,
+	[DateFirstReceipt] [datetime] NULL,
+	[InventoryCycleId] [int] NULL,
+	[IsMas90Exported] [bit] NOT NULL,
+	[Mas90ExportedOn] [datetime] NULL,
+	[CompanyId2] [int] NULL,
+	[CompanyId3] [int] NULL,
+	[UomChange] [bit] NOT NULL,
+	[WorkingItemDate] [datetime] NULL,
+	[WorkingItemDesigner] [nvarchar](100) NULL,
+	[PrimaryBin] [varchar](12) NULL,
+	[LeadTestValidUntil] [date] NULL,
+	[PkgTestValidUntil] [date] NULL,
+	[SalesNotes] [nvarchar](4000) NULL,
+	[CubicFeetPallet] [int] NULL,
+	[WorkingItemSetupDate] [datetime] NULL,
+	[AdCopyText] [nvarchar](4000) NULL,
+	[AdInfo] [nvarchar](4000) NULL,
+	[FirstCostCurrency] [nvarchar](3) NULL,
+	[DatePublished] [datetime] NULL,
+	[WebCategoryId] [nvarchar](12) NULL,
+	[WebCategorySubId] [nvarchar](12) NULL,
+	[WebPublish] [int] NULL,
+	[WebNotes] [nvarchar](1000) NULL,
+	[WebDates] [nvarchar](4000) NULL,
+	[WebCheck] [bit] NOT NULL,
+	[DateFirstPO] [datetime] NULL,
+	[BulkType] [nvarchar](4) NULL,
+	[HoleMountId] [int] NULL,
+	[HoleMount2Id] [int] NULL,
+	[HoleMount3Id] [int] NULL,
+ CONSTRAINT [PK_Work_Item] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Work_ProductFamilies]    Script Date: 8/13/2021 6:47:15 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Work_ProductFamilies](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](64) NOT NULL,
+	[Abbr] [nvarchar](12) NULL,
+	[Descr] [nvarchar](128) NULL,
+	[CreatedBy] [nvarchar](50) NULL,
+	[CreatedOn] [datetime] NULL,
+	[UpdatedBy] [nvarchar](50) NULL,
+	[UpdatedOn] [datetime] NULL,
+	[Sort] [int] NULL,
+ CONSTRAINT [PK_Work_ProductFamilies] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Work_ProductLines]    Script Date: 8/13/2021 6:47:15 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Work_ProductLines](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](64) NOT NULL,
+	[Abbr] [nvarchar](12) NULL,
+	[Descr] [nvarchar](128) NULL,
+	[CreatedBy] [nvarchar](50) NULL,
+	[CreatedOn] [datetime] NULL,
+	[UpdatedBy] [nvarchar](50) NULL,
+	[UpdatedOn] [datetime] NULL,
+	[IsForWeb] [bit] NOT NULL,
+ CONSTRAINT [PK_Work_ProductLines] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Work_ProductStyles]    Script Date: 8/13/2021 6:47:15 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Work_ProductStyles](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](64) NOT NULL,
+	[Abbr] [nvarchar](12) NULL,
+	[Descr] [nvarchar](128) NULL,
+	[CreatedBy] [nvarchar](50) NULL,
+	[CreatedOn] [datetime] NULL,
+	[UpdatedBy] [nvarchar](50) NULL,
+	[UpdatedOn] [datetime] NULL,
+ CONSTRAINT [PK_Work_ProductStyles] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Work_Vendors]    Script Date: 8/13/2021 6:47:15 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Work_Vendors](
+	[VendorId] [int] IDENTITY(1,1) NOT NULL,
+	[VendorName] [nvarchar](100) NOT NULL,
+	[VendorAddress] [nvarchar](100) NULL,
+	[VendorAddress2] [nvarchar](100) NULL,
+	[VendorAddress3] [nvarchar](100) NULL,
+	[VendorCity] [nvarchar](100) NULL,
+	[VendorState] [nvarchar](50) NULL,
+	[VendorZip] [varchar](12) NULL,
+	[VendorCountry] [nvarchar](100) NULL,
+	[VendorISO] [varchar](10) NULL,
+	[ImgURL] [nvarchar](100) NULL,
+	[InvitationCode] [varchar](50) NULL,
+	[VendorNumber] [varchar](50) NULL,
+	[MailingAddress] [varchar](500) NULL,
+	[Tel_1] [nvarchar](50) NULL,
+	[Tel_2] [nvarchar](50) NULL,
+	[Fax_1] [nvarchar](50) NULL,
+	[Fax_2] [nvarchar](50) NULL,
+	[Email_1] [nvarchar](100) NULL,
+	[Email_2] [nvarchar](100) NULL,
+	[Mobile_1] [nvarchar](50) NULL,
+	[Contact_1] [nvarchar](50) NULL,
+	[Contact_2] [nvarchar](50) NULL,
+	[VendorName2] [nvarchar](100) NULL,
+	[VendorAddress2A] [nvarchar](100) NULL,
+	[VendorAddress2B] [nvarchar](100) NULL,
+	[VendorCityProv2] [nvarchar](100) NULL,
+	[VendorCountry2] [nvarchar](100) NULL,
+	[Email_3] [nvarchar](100) NULL,
+	[Mobile_2] [nvarchar](50) NULL,
+	[Mobile_3] [nvarchar](50) NULL,
+	[Contact_3] [nvarchar](50) NULL,
+	[VendorType] [varchar](50) NOT NULL,
+	[VendorZip2] [varchar](12) NULL,
+	[VendorISO2] [varchar](10) NULL,
+	[CreatedBy] [varchar](50) NULL,
+	[CreatedOn] [datetime] NULL,
+	[UpdatedBy] [varchar](50) NULL,
+	[UpdatedOn] [datetime] NULL,
+	[BankNotes1] [nvarchar](4000) NULL,
+	[BankNotes2] [nvarchar](4000) NULL,
+	[AddressNotes1] [nvarchar](4000) NULL,
+	[AddressNotes2] [nvarchar](4000) NULL,
+	[VendorNickName] [nvarchar](40) NULL,
+	[VendorDeposit] [float] NULL,
+	[VendorDepositDays] [smallint] NULL,
+	[VendorDepositType] [varchar](20) NULL,
+	[VendorBalance] [float] NULL,
+	[VendorBalanceDays] [smallint] NULL,
+	[VendorBalanceType] [varchar](20) NULL,
+	[PaymentTermsText] [nvarchar](300) NULL,
+	[IsSycVendor] [bit] NOT NULL,
+	[DefaultCurrency] [varchar](3) NOT NULL,
+ CONSTRAINT [PK_Work_Vendors] PRIMARY KEY CLUSTERED 
+(
+	[VendorId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  StoredProcedure [dbo].[getActivityDetail]    Script Date: 8/13/2021 6:47:15 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE proc  [dbo].[getActivityDetail]
+as
+begin
+
+
+-- this stored proc needs to be modified show correct data
+SELECT id=w.id,
+	   LumisourceItemId=w.lumisourceItemId,
+	   UnitsInInventory=convert(int,floor(1100 * RAND(convert(varbinary, newid())))),
+	   UnitsSold=convert(int,floor(1100 * RAND(convert(varbinary, newid())))),
+	   RevenueByMonth=floor(1100 * RAND(convert(varbinary, newid()))),
+	   
+	   CustomerNo=v.VendorNumber,
+	   [JanToDec]=floor(1100 * RAND(convert(varbinary, newid()))),
+	   [Total2018]=floor(1100 * RAND(convert(varbinary, newid()))),
+	   Weeksactive=a.WeeksActive,
+	   [status]=case when w.Status='active' then convert(bit,1) else convert(bit,0) end,
+	   GONOGO='Go',
+	   SalesProjections=floor(1100 * RAND(convert(varbinary, newid())))
+
+  FROM [LumiSource].[dbo].[Work_Item] w 
+  inner join Work_AR_SalesByMonth a on w.id=a.ItemId
+  left join Work_ProductFamilies f on w.ProductFamilyId=f.Id
+  left join Work_ProductStyles s on w.ProductStyleId=s.id
+  left join Work_Vendors v on w.VendorId=v.VendorId
+ 
+ 
+ end
+GO
+/****** Object:  StoredProcedure [dbo].[getSaleRevenueGrid]    Script Date: 8/13/2021 6:47:15 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+ 
+CREATE proc  [dbo].[getSaleRevenueGrid]
+as
+begin
+SELECT 
+	   w.id
+	  ,[LumisourceItemId]
+      ,[LumisourceCollection]
+      ,[LumisourceDescriptionLong]
+	  ,[UpcId]
+      ,w.VendorId
+	  ,f.Name as Family
+	  ,s.Name as Style
+	  ,v.VendorNumber
+      --,[VendorItemId]
+	  ,GrossSales=a.Total*w.UnitPrice
+	  ,GrossRevenue=a.Total*w.UnitPrice
+
+  FROM [LumiSource].[dbo].[Work_Item] w 
+  inner join Work_AR_SalesByMonth a on w.id=a.ItemId
+  left join Work_ProductFamilies f on w.ProductFamilyId=f.Id
+  left join Work_ProductStyles s on w.ProductStyleId=s.id
+  left join Work_Vendors v on w.VendorId=v.VendorId
+
+
+
+ 
+
+ end
+GO

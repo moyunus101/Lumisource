@@ -1,0 +1,274 @@
+﻿
+@{
+    ViewData["Title"] = "Tabs Page";
+}
+
+<!DOCTYPE html>
+<style>
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.topnav {
+  overflow: hidden;
+  background-color: #333;
+}
+
+.topnav a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.topnav a.active {
+  background-color: #04AA6D;
+  color: white;
+}
+
+.topnav .icon {
+  display: none;
+}
+
+
+
+@@media screen and (max-width: 600px) {
+  .topnav.responsive {position: relative;}
+  .topnav.responsive .icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  @@media screen and (max-width: 600px) {
+  .topnav a:not(:first-child) {display: none;}
+  .topnav a.icon {
+    float: right;
+    display: block;
+  }
+}
+  .topnav.responsive a {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+}
+</style>
+<html>
+<head>
+    <title> Tabs</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2021.2.616/styles/kendo.common.min.css" />
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2021.2.616/styles/kendo.default.min.css" />
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2021.2.616/styles/kendo.default.mobile.min.css" />
+    <script src="https://kendo.cdn.telerik.com/2021.2.616/js/jquery.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2021.2.616/js/jszip.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2021.2.616/js/kendo.all.min.js"></script>
+</head>
+
+
+
+<body>
+    <div class="topnav" id="myTopnav">
+        <a href="#home" class="active">Limi Source Home</a>
+        <a href="#bireports">BI Reports</a>
+        <a href="#AP">Account Payable</a>
+        <a href="#Imagemgmt">Image Management</a>
+        <a href="#about">About</a>
+        <a href="javascript:void(0);" class="icon" onclick="ResponsiveNavigation()">
+            <i class="fa fa-bars"></i>
+        </a>
+    </div>
+
+    <div style="padding-left:16px">
+        <h2>Lumi Source, LLC </h2>
+        
+    </div>
+    <div id="maindiv">
+        <div class="demo-section k-content">
+            <div id="tabstrip">
+                <ul>
+                    <li class="k-state-active">
+                        Products
+                    </li>
+                    <li>
+                        Activity Details
+                    </li>
+
+                </ul>
+                <div>
+                    <span style="background-color:yellowgreen;font-size:2em">&nbsp;This is panel 1</span>
+
+                    <div id="grid"></div>
+
+                </div>
+                <div>
+                    <span style="background-color:yellowgreen;font-size:2em">&nbsp;This is panel 2</span>
+                    <div id="grid2"></div>
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+
+        <script>
+            $(document).ready(function () {
+                $("#tabstrip").kendoTabStrip({
+                    animation: {
+                        open: {
+                            effects: "fadeIn"
+                        }
+                    }
+                });
+                function refresh_data_in_grid() {
+                    $.getJSON("https://localhost:44360/api/WorkCustomers/Grid1ResultSet", function (Customers) {
+
+                        $("#grid").kendoGrid({
+                            dataSource: {
+                                data: Customers,
+                                schema: {
+                                    /*{"id":8391,"lumisourceItemId":"AD-ELEMENT3W","lumisourceCollection":"ELEMENT TOUCH LAMP",
+                                     * "lumisourceDescriptionLong":"ELEMENT ULTRA MODERN TOUCH LAMP IN POLISHED STAINLESS STEEL BY LUMISOURCE",
+                                     * "upcId":"681144417307","vendorId":1005,"family":"ELEMENT",
+                                     * "style":"MODERN","vendorNumber":"ALDO","grossSales":494.5,"grossRevenue":494.5}
+                                     */
+                                    model: {
+                                        fields: {
+                                            id: { type: "number" },
+                                            lumisourceItemId: { type: "string" },
+                                            lumisourceCollection: { type: "string" },
+                                            lumisourceDescriptionLong: { type: "string" },
+                                            upcId: { type: "string" },
+                                            vendorId: { type: "number" },
+                                            family: { type: "string" },
+                                            style: { type: "string" },
+                                            vendorNumber: { type: "string" },
+                                            grossSales: { type: "number" },
+                                            grossRevenue: { type: "number" }
+                                        }
+                                    }
+                                },
+                                pageSize: 25
+                            },
+                            height: 650,
+                            sortable: true,
+                            filterable: true,
+                            sortable: true,
+                            pageable: true,
+                            groupable: true,
+                            columnMenu: true,
+                            reorderable: true,
+                            resizable: true,
+                            toolbar: ["excel", "search"],
+                            pageable: {
+                                input: true,
+                                numeric: false
+                            },
+                            columns: [
+                                { field: "id", title: "ID", width: "130px" },
+                                { field: "lumisourceItemId", title: "Lumisource ItemId", format: "{0:c}", width: "130px" },
+                                { field: "lumisourceDescriptionLong", title: "Lumisource Description", width: "250px" },
+                                { field: "upcId", title: "UPC", width: "100px" },
+                                { field: "vendorId", title: "Vendor ID", width: "100px" },
+                                { field: "family", title: "Family", width: "130px" },
+                                { field: "style", title: "Style", width: "130px" },
+                                { field: "vendorNumber", title: "Vendor Number", width: "130px" },
+                                { field: "grossSales", title: "Gross Sales", format: "{0:c}", width: "100px" },
+                                { field: "grossRevenue", title: "Gross Revenue", format: "{0:c}", width: "100px" }
+                            ]
+
+
+                        });
+                    });
+                    $.getJSON("https://localhost:44360/api/WorkCustomers/Grid2ResultSet", function (productfamilies) {
+                        $("#grid2").kendoGrid({
+                            dataSource: {
+                                data: productfamilies,
+                                schema: {
+                                    model: {
+                                        fields: {
+                                            lumisourceItemId: { type: "string" },
+                                            unitsInInventory: { type: "number" },
+                                            unitsSold: { type: "number" },
+                                            revenueByMonth: { type: "number" },
+                                            customerNo: { type: "string" },
+                                            janToDec: { type: "number" },
+                                            total2018: { type: "number" },
+                                            weeksactive: { type: "number" },
+                                            status: { type: "boolean" },
+                                            gonogo: { type: "string" },
+                                            salesProjections: { type: "number" }
+                                        }
+                                    }
+                                },
+                                pageSize: 25
+                            },
+                            height: 650,
+                            sortable: true,
+                            filterable: true,
+                            sortable: true,
+                            pageable: true,
+                            groupable: true,
+                            columnMenu: true,
+                            reorderable: true,
+                            resizable: true,
+                            toolbar: ["excel", "search"],
+                            pageable: {
+                                input: true,
+                                numeric: false
+                            },
+
+                            columns: [
+
+                                { field: "lumisourceItemId", title: "Lumisource ItemId", width: "130px" },
+                                { field: "unitsInInventory", title: "Units In Inventory", format: "{0:N}", width: "130px" },
+                                { field: "unitsSold", title: "Units Sold", format: "{0:N}", width: "130px" },
+                                { field: "revenueByMonth", title: "Revenue By Month", format: "{0:c}", width: "130px" },
+                                { field: "customerNo", title: "Customer No", format: "{0:c}", width: "130px" },
+                                { field: "janToDec", title: "Jan .. Dec", width: "130px" },
+                                { field: "total2018", title: "Total 2018", width: "130px" },
+                                { field: "weeksactive", title: "Weeks Active", width: "130px" },
+                                {
+                                    field: "status", title: "Status", width: "130px",
+                                    template: '<input type="checkbox"  #= status == true ? checked="checked" : "" #>'
+                                },
+                                { field: "gonogo", title: "Go/No-go", width: "130px" },
+                                { field: "salesProjections", title: "Sales Projections", format: "{0:c}", width: "130px" }
+
+
+                            ]
+                        });
+                    });
+                }
+                refresh_data_in_grid();
+            });
+
+
+            function ResponsiveNavigation() {
+                var x = document.getElementById("myTopnav");
+                if (x.className === "topnav") {
+                    x.className += " responsive";
+                } else {
+                    x.className = "topnav";
+                }
+            }
+
+        </script>
+    </div>
+
+
+</body>
+</html>
+
